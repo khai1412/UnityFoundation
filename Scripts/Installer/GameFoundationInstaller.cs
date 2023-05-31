@@ -1,6 +1,7 @@
 ﻿namespace GameFoundation.Scripts.Installer
 {
     using GameFoundation.Scripts.AssetLibrary;
+    using GameFoundation.Scripts.Utilities;
     using GameFoundation.Scripts.Utilities.Extension;
     using GameFoundation.Scripts.Utilities.ObjectPool;
     using Zenject;
@@ -13,6 +14,7 @@
             this.Container.Bind<IGameAssets>().To<GameAssets>().AsCached();
             this.Container.Bind<ObjectPoolManager>().AsCached().NonLazy();
             this.Container.Bind<Fps>().FromNewComponentOnNewGameObject().AsCached().NonLazy();
+            this.Container.Bind<HandleLocalDataServices>().AsCached().NonLazy();
         }
     }
 }

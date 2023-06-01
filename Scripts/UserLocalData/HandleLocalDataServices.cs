@@ -2,7 +2,7 @@ namespace GameFoundation.Scripts.Utilities
 {
     using System;
     using System.Collections.Generic;
-    using Unity.Plastic.Newtonsoft.Json;
+    using Newtonsoft.Json;
     using UnityEngine;
 
     /// <summary>

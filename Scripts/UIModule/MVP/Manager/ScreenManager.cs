@@ -96,7 +96,7 @@
         }
         
       
-        private bool CheckIsOverlay(IScreenPresenter screenPresenter) { return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<PopupInfoAttribute>().IsOverlay; }
+        private bool CheckIsOverlay(IScreenPresenter screenPresenter) { return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<ScreenInfoAttribute>().IsOverlay; }
         
         public void Dispose()
         {

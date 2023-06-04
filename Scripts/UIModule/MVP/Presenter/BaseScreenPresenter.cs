@@ -27,7 +27,7 @@
         {
             if (this.View == null)
             {
-                this.View = await this.SetupView<TView>();
+                this.SetView(await this.SetupView<TView>());
                 return (TView)this.View;
             }
             if (!typeof(TView).IsSubclassOf(this.View.GetType()))
@@ -35,6 +35,11 @@
                 throw new Exception("can't get view!");
             }
 
+            return this.View as TView;
+        }
+
+        public TView GetViewMono<TView>() where TView : class, IScreenView
+        {
             return this.View as TView;
         }
         public void SetView(IScreenView view)

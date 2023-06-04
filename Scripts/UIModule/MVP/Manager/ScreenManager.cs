@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-    using Cysharp.Threading.Tasks;
     using GameFoundation.Scripts.UIModule;
     using GameFoundation.Scripts.UIModule.MVP.View;
     using GameFoundation.Scripts.Utilities.Extension;
@@ -13,7 +11,6 @@
     using UnityFoundation.Scripts.Extensions;
     using UnityFoundation.Scripts.UIModule.MVP.Presenter;
     using UnityFoundation.Scripts.UIModule.MVP.Signals;
-    using UnityFoundation.Scripts.UIModule.MVP.View;
     using Zenject;
 
     public class ScreenManager :MonoBehaviour, IInitializable,IDisposable
@@ -42,11 +39,12 @@
             this.signalBus.Subscribe<ShowScreenSignal>(this.OnShowScreen);
             this.signalBus.Subscribe<CloseScreenSignal>(this.OnCloseScreen);
         }
-        public void OpenScreen<TPresenter>() where TPresenter: BaseScreenPresenter
+        public async void OpenScreen<TView,TPresenter>() where TView: class, IScreenView where TPresenter: BaseScreenPresenter
         {
             if (!this.loadedPresenters.TryGetValue(typeof(TPresenter), out var screenPresenter))
             {
                 var presenter = this.GetCurrentContainer().Instantiate<TPresenter>();
+                await presenter.GetView<TView>();
                 this.loadedPresenters.Add(typeof(TPresenter), presenter);
                 presenter.OpenView();
                 return;
@@ -99,8 +97,13 @@
             var currentPresenter = this.activeScreens.Last();
             currentPresenter.CloseView();
         }
-        
-        private bool CheckIsOverlay(IScreenPresenter screenPresenter) { return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<ScreenInfoAttribute>().IsOverlay; }
+
+        private bool CheckIsOverlay(IScreenPresenter screenPresenter)
+        {
+            var a = screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter));
+            var b = screenPresenter.GetCustomAttribute<ScreenInfoAttribute>();
+            return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<ScreenInfoAttribute>().IsOverlay;
+        }
         
         public void Dispose()
         {

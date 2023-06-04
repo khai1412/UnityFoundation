@@ -9,7 +9,11 @@ namespace UnityFoundation.Scripts.UIModule.MVP.Presenter
         public string AddressableScreenPath { get; }
         public bool   IsOverlay             { get; }
 
-        public ScreenInfoAttribute(string addressableScreenPath,bool isOverlay = false) { this.AddressableScreenPath = addressableScreenPath; }
+        public ScreenInfoAttribute(string addressableScreenPath, bool isOverlay = false)
+        {
+            this.AddressableScreenPath = addressableScreenPath;
+            this.IsOverlay             = isOverlay;
+        }
     }
     
 }

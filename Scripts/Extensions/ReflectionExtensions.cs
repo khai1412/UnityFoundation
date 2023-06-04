@@ -1,4 +1,4 @@
-namespace TheOneStudio.HyperCasual.Extensions
+namespace UnityFoundation.Scripts.Extensions
 {
     using System;
     using System.Collections.Generic;

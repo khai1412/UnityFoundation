@@ -13,7 +13,7 @@ namespace Data.BlueprintData
 
         public override bool CanHandle(Type type)
         {
-            return typeof(BlueprintData).IsAssignableFrom(type);
+            return typeof(IData).IsAssignableFrom(type);
         }
 
         protected override UniTask SaveJson(string json, Type type)

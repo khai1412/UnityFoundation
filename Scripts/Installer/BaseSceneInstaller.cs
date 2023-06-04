@@ -5,7 +5,7 @@
     using UnityFoundation.Scripts.UIModule.MVP.Manager;
     using Zenject;
 
-    public class BaseSceneInstaller : MonoInstaller
+    public abstract class BaseSceneInstaller : MonoInstaller
     {
         [SerializeField] protected RootUICanvas rootUICanvas;
 

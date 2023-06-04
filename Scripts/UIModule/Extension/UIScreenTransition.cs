@@ -21,22 +21,22 @@
 
         private void Awake()
         {
-            this.eventSystem   = EventSystem.current;
-            if (!this.introAnimation.playableAsset)
-                Debug.LogWarning($"Intro Animation for {this.gameObject.name} is not available", this);
-            else
-            {
-                this.introAnimation.playOnAwake =  false;
-                this.introAnimation.stopped     += this.OnAnimComplete;
-            }
-
-            if (!this.outroAnimation.playableAsset)
-                Debug.LogWarning($"Outro animation for {this.gameObject.name} is not available", this);
-            else
-            {
-                this.outroAnimation.playOnAwake =  false;
-                this.outroAnimation.stopped     += this.OnAnimComplete;
-            }
+            // this.eventSystem   = EventSystem.current;
+            // if (!this.introAnimation.playableAsset)
+            //     Debug.LogWarning($"Intro Animation for {this.gameObject.name} is not available", this);
+            // else
+            // {
+            //     this.introAnimation.playOnAwake =  false;
+            //     this.introAnimation.stopped     += this.OnAnimComplete;
+            // }
+            //
+            // if (!this.outroAnimation.playableAsset)
+            //     Debug.LogWarning($"Outro animation for {this.gameObject.name} is not available", this);
+            // else
+            // {
+            //     this.outroAnimation.playOnAwake =  false;
+            //     this.outroAnimation.stopped     += this.OnAnimComplete;
+            // }
         }
 
         public UniTask PlayIntroAnim()

@@ -3,17 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Cysharp.Threading.Tasks;
     using GameFoundation.Scripts.UIModule;
-    using GameFoundation.Scripts.UIModule.ScreenFlow.BaseScreen.Presenter;
+    using GameFoundation.Scripts.UIModule.MVP.View;
     using GameFoundation.Scripts.Utilities.Extension;
-    using TheOneStudio.HyperCasual.Extensions;
+    using GameFoundation.Scripts.Utilities.ObjectPool;
     using UnityEngine;
+    using UnityFoundation.Scripts.Extensions;
     using UnityFoundation.Scripts.UIModule.MVP.Presenter;
     using UnityFoundation.Scripts.UIModule.MVP.Signals;
     using Zenject;
 
-    public class ScreenManager : IInitializable,IDisposable
+    public class ScreenManager :MonoBehaviour, IInitializable,IDisposable
     {
         public  Transform                          CurrentRootScreen  { get; set; }
         public  Transform                          CurrentHiddenRoot  { get; set; }
@@ -23,27 +23,29 @@
         private Dictionary<Type, IScreenPresenter> loadedPresenters;
         private List<IScreenPresenter>             activeScreens;
         private SignalBus                          signalBus;
+        private ObjectPoolManager                  objectPoolManager;
 
-        public ScreenManager(SignalBus signalBus)
+        public ScreenManager(SignalBus signalBus,ObjectPoolManager objectPoolManager)
         {
-            this.signalBus = signalBus;
+            this.signalBus         = signalBus;
+            this.objectPoolManager = objectPoolManager;
         }
         
         public void Initialize()
         {
             this.loadedPresenters   = new();
             this.activeScreens = new();
+            this.signalBus = this.GetCurrentContainer().Resolve<SignalBus>();
             this.signalBus.Subscribe<ShowScreenSignal>(this.OnShowScreen);
             this.signalBus.Subscribe<CloseScreenSignal>(this.OnCloseScreen);
         }
-        public async void OpenScreen<T>() where T : IScreenPresenter
+        public async void OpenScreen<TView,TPresenter>() where TView: class, IScreenView where TPresenter: BaseScreenPresenter
         {
-            if (!this.loadedPresenters.TryGetValue(typeof(T), out var screenPresenter))
+            if (!this.loadedPresenters.TryGetValue(typeof(TPresenter), out var screenPresenter))
             {
-                var presenter = this.GetCurrentContainer().Instantiate<T>();
-                this.loadedPresenters.Add(typeof(T), presenter);
-                presenter.SetupView();
-                await UniTask.WaitUntil(() => presenter.View.IsReadyToUse);
+                var presenter = this.GetCurrentContainer().Instantiate<TPresenter>();
+                await presenter.GetView<TView>();
+                this.loadedPresenters.Add(typeof(TPresenter), presenter);
                 presenter.OpenView();
                 return;
             }
@@ -53,7 +55,8 @@
         private void OnShowScreen(ShowScreenSignal signal)
         {
             var presenter = signal.Presenter;
-            presenter.View.RectTransform.SetParent(this.CheckIsOverlay(presenter)?this.CurrentOverlayRoot:this.CurrentRootScreen);
+            var view      = signal.View;
+            view.RectTransform.SetParent(this.CheckIsOverlay(presenter)?this.CurrentOverlayRoot:this.CurrentRootScreen);
             if (!this.activeScreens.Contains(presenter))
             {
                 this.activeScreens.Add(presenter);
@@ -69,7 +72,7 @@
         private void OnCloseScreen(CloseScreenSignal signal)
         {
             var presenter = signal.ScreenPresenter;
-            presenter.View.RectTransform.parent = this.CurrentHiddenRoot;
+            signal.View.RectTransform.parent = this.CurrentHiddenRoot;
             this.activeScreens.Remove(presenter);
         }
 
@@ -94,9 +97,13 @@
             var currentPresenter = this.activeScreens.Last();
             currentPresenter.CloseView();
         }
-        
-      
-        private bool CheckIsOverlay(IScreenPresenter screenPresenter) { return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<ScreenInfoAttribute>().IsOverlay; }
+
+        private bool CheckIsOverlay(IScreenPresenter screenPresenter)
+        {
+            var a = screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter));
+            var b = screenPresenter.GetCustomAttribute<ScreenInfoAttribute>();
+            return screenPresenter.GetType().IsSubclassOf(typeof(BaseScreenPresenter)) && screenPresenter.GetCustomAttribute<ScreenInfoAttribute>().IsOverlay;
+        }
         
         public void Dispose()
         {

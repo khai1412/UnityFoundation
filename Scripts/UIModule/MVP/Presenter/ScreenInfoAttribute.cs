@@ -1,4 +1,4 @@
-namespace GameFoundation.Scripts.UIModule.ScreenFlow.BaseScreen.Presenter
+namespace UnityFoundation.Scripts.UIModule.MVP.Presenter
 {
     using System;
 
@@ -8,8 +8,12 @@ namespace GameFoundation.Scripts.UIModule.ScreenFlow.BaseScreen.Presenter
     {
         public string AddressableScreenPath { get; }
         public bool   IsOverlay             { get; }
-      
-        public ScreenInfoAttribute(string addressableScreenPath) { this.AddressableScreenPath = addressableScreenPath; }
+
+        public ScreenInfoAttribute(string addressableScreenPath, bool isOverlay = false)
+        {
+            this.AddressableScreenPath = addressableScreenPath;
+            this.IsOverlay             = isOverlay;
+        }
     }
     
 }

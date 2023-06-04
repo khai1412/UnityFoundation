@@ -2,6 +2,7 @@ namespace GameFoundation.Scripts.Utilities.Extension
 {
     using System;
     using System.Linq;
+    using TheOneStudio.HyperCasual.Extensions;
     using Zenject;
     using Object = UnityEngine.Object;
 
@@ -16,7 +17,7 @@ namespace GameFoundation.Scripts.Utilities.Extension
                                                                                                         methodInfo.GetGenericArguments().Length == 1 && methodInfo.GetParameters().Length == 1);
 
             // Bind pool for all http request
-            var allDriveType = ReflectionUtils.GetAllDerivedTypes<T>();
+            var allDriveType = ReflectionExtensions.GetDerivedTypes(typeof(T));
             foreach (var type in allDriveType)
             {
                 var factoryToChoiceIdBinder = bindMemoryPoolMethod.MakeGenericMethod(type).Invoke(container, null);
@@ -32,7 +33,7 @@ namespace GameFoundation.Scripts.Utilities.Extension
         [Obsolete("Use BindAllDerivedTypes instead")]
         public static void BindAllTypeDriveFrom<T>(this DiContainer diContainer)
         {
-            foreach (var type in ReflectionUtils.GetAllDerivedTypes<T>())
+            foreach (var type in ReflectionExtensions.GetDerivedTypes(typeof(T)))
             {
                 diContainer.Bind(type).AsCached().NonLazy();
             }
@@ -43,7 +44,7 @@ namespace GameFoundation.Scripts.Utilities.Extension
         /// </summary>
         public static void BindAllDerivedTypes<T>(this DiContainer container, bool nonLazy = false, bool sameAssembly = false)
         {
-            foreach (var type in ReflectionUtils.GetAllDerivedTypes<T>(sameAssembly: sameAssembly))
+            foreach (var type in ReflectionExtensions.GetDerivedTypes(typeof(T)))
             {
                 if (nonLazy)
                 {
@@ -58,7 +59,7 @@ namespace GameFoundation.Scripts.Utilities.Extension
 
         public static void BindInterfacesAndSelfToAllTypeDriveFrom<T>(this DiContainer diContainer)
         {
-            foreach (var type in ReflectionUtils.GetAllDerivedTypes<T>())
+            foreach (var type in ReflectionExtensions.GetDerivedTypes(typeof(T)))
             {
                 diContainer.BindInterfacesAndSelfTo(type).AsCached().NonLazy();
             }

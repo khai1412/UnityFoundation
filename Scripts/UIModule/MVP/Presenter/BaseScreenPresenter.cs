@@ -38,11 +38,11 @@
             return this.View as TView;
         }
 
-        public TView GetViewMono<TView>() where TView : class, IScreenView
+        protected TView GetViewMono<TView>() where TView : class, IScreenView
         {
             return this.View as TView;
         }
-        public void SetView(IScreenView view)
+        private void SetView(IScreenView view)
         {
             this.View = view;
             this.OnVewReady();
@@ -83,7 +83,7 @@
 
         public void OverrideView<TView>(TView view) where TView : BaseView
         {
-            if (!view.GetType().IsSubclassOf(View.GetType())) throw new Exception("cannot over current view");
+            if (!view.GetType().IsSubclassOf(this.View.GetType())) throw new Exception("cannot over current view");
             this.View = view;
         }
         

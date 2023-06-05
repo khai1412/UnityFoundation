@@ -1,0 +1,12 @@
+﻿{
+  "name": "UnityFoundationConverter",
+  "rootNamespace": "",
+  "references": [
+    "Unity.ResourceManager",
+    "Unity.TextMeshPro",
+    "UniTask",
+    "UniTask.Addressables",
+    "Unity.Addressables",
+    "UnityFoundationExtension"
+  ]
+}

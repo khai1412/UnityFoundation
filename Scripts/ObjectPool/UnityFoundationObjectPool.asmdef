@@ -1,0 +1,13 @@
+﻿{
+  "name": "UnityFoundationObjectPool",
+  "rootNamespace": "",
+  "references": [
+    "Zenject",
+    "UnityFoundationExtension",
+    "UnityFoundationGameAsset",
+    "UniTask",
+    "Unity.ResourceManager",
+    "UniTask.Addressables",
+    "Unity.Addressables"
+  ]
+}

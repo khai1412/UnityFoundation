@@ -1,0 +1,9 @@
+﻿{
+  "name": "UnityFoundationUIModule",
+  "references":[ 
+    "Zenject",
+    "UnityFoundationExtension",
+    "UnityFoundationObjectPool",
+    "UniTask"
+  ]
+}

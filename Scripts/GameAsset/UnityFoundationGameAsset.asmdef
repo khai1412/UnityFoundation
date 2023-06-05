@@ -1,0 +1,12 @@
+﻿{
+  "name": "UnityFoundationGameAsset",
+  "rootNamespace": "",
+  "references": [
+    "UnityFoundationExtension",
+    "Zenject",
+    "UniTask.Addressables",
+    "Unity.Addressables",
+    "UniTask",
+    "Unity.ResourceManager"
+  ]
+}

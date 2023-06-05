@@ -1,0 +1,7 @@
+﻿{
+  "name": "UnityFoundationStateMachine",
+  "rootNamespace": "",
+  "references": [ 
+    "Zenject"
+  ]
+}

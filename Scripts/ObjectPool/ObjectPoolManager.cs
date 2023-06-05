@@ -9,6 +9,7 @@ namespace GameFoundation.Scripts.Utilities.ObjectPool
     using UnityEngine;
     using Object = UnityEngine.Object;
 
+
     public sealed class ObjectPoolManager
     {
         private readonly IGameAssets       gameAssets;

@@ -2,7 +2,6 @@ namespace GameFoundation.Scripts.Utilities.Extension
 {
     using System;
     using System.Linq;
-    using TheOneStudio.HyperCasual.Extensions;
     using UnityFoundation.Scripts.Extensions;
     using Zenject;
     using Object = UnityEngine.Object;

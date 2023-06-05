@@ -1,0 +1,12 @@
+﻿{
+  "name": "UnityFoundationInstaller",
+  "rootNamespace": "",
+  "references": [
+    "UnityFoundationExtension",
+    "Zenject",
+    "UnityFoundationUIModule",
+    "UnityFoundationObjectPool",
+    "UnityFoundationGameAsset",
+    "UnityFoundationLocalData"
+  ]
+}

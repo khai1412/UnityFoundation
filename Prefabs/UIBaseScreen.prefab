@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 4613682197113720899}
   - component: {fileID: 6154418694213776383}
   - component: {fileID: 663359892895165794}
-  - component: {fileID: 7242489546102743033}
   m_Layer: 5
   m_Name: UIBaseScreen
   m_TagString: Untagged
@@ -263,18 +262,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &7242489546102743033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3490610340683094571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c778e6b08b24c7ca557dccb7e4a32e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4117897251751433606
 GameObject:
   m_ObjectHideFlags: 0

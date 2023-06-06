@@ -55,6 +55,8 @@
             var presenter = signal.Presenter;
             var view      = signal.View;
             view.RectTransform.SetParent(this.CheckIsOverlay(presenter) ? this.CurrentOverlayRoot : this.CurrentRootScreen);
+            view.ViewMonoObject.transform.localPosition = Vector3.zero;
+            view.ViewMonoObject.transform.localScale    = new Vector3(1, 1, 1);
             if (!this.activeScreens.Contains(presenter))
             {
                 this.activeScreens.Add(presenter);

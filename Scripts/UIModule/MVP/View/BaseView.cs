@@ -45,6 +45,7 @@
         {
             Destroy(this.gameObject);
         }
+        
         public event Action OnViewClose;
         public event Action OnViewOpen;
         public event Action OnViewDestroy;

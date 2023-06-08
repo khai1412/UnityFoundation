@@ -1,3 +1,6 @@
+using UnityFoundation.Scripts.GameAsset;
+
+// ReSharper disable once CheckNamespace
 namespace GameFoundation.Scripts.Utilities.ObjectPool
 {
     using System;
@@ -5,7 +8,6 @@ namespace GameFoundation.Scripts.Utilities.ObjectPool
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Cysharp.Threading.Tasks;
-    using GameFoundation.Scripts.AssetLibrary;
     using UnityEngine;
     using Object = UnityEngine.Object;
 

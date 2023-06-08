@@ -1,6 +1,7 @@
-﻿namespace GameFoundation.Scripts.Installer
+﻿using UnityFoundation.Scripts.GameAsset;
+
+namespace GameFoundation.Scripts.Installer
 {
-    using GameFoundation.Scripts.AssetLibrary;
     using GameFoundation.Scripts.Utilities;
     using GameFoundation.Scripts.Utilities.Extension;
     using GameFoundation.Scripts.Utilities.ObjectPool;

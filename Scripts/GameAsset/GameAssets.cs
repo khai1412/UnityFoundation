@@ -7,52 +7,98 @@ using UnityEngine.SceneManagement;
 
 namespace UnityFoundation.Scripts.GameAsset
 {
+    using System;
+
     public class GameAssets : IGameAssets
     {
-        public Dictionary<object, AsyncOperationHandle> LoadedAssets;
-        public Dictionary<object, AsyncOperationHandle> LoadingAsset;
+        private Dictionary<object, AsyncOperationHandle> loadedAssets       = new();
+        private Dictionary<object, AsyncOperationHandle> loadingAssets      = new();
+        private Dictionary<object, List<object>>         assetLoadedByScene = new();
         public AsyncOperationHandle<SceneInstance> LoadSceneAsync(object key, LoadSceneMode loadMode = LoadSceneMode.Single,
             bool activeOnLoad = true)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public AsyncOperationHandle<SceneInstance> UnloadSceneAsync(object key)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void UnloadUnusedAssets(string sceneName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public List<AsyncOperationHandle<T>> PreloadAsync<T>(string targetScene = "", params object[] keys)
-        {
-            return keys.Select(key => Addressables.LoadAssetAsync<T>(key)).ToList();
-        }
-
-        public AsyncOperationHandle<T> LoadAssetAsync<T>(object key, bool isAutoUnload = true, string targetScene = "")
-        {
-            if (this.LoadedAssets.TryGetValue(key, out var loadAssetHandle)) return loadAssetHandle.Convert<T>();
-            var handle = Addressables.LoadAssetAsync<T>(key);
-            this.LoadingAsset.Add(key,handle);
+            if (this.loadedAssets.TryGetValue(key, out var loadAssetHandle)) return loadAssetHandle.Convert<SceneInstance>();
+            if (this.loadingAssets.TryGetValue(key, out var loadingAssetHandle)) return loadingAssetHandle.Convert<SceneInstance>();
+            var handle = Addressables.LoadSceneAsync(key, loadMode, activeOnLoad);
+            this.loadingAssets.Add(key, handle);
             handle.Completed += (asyncOperationHandle) =>
             {
-                this.LoadedAssets.Add(key,asyncOperationHandle);
-                this.LoadingAsset.Remove(key);
+                this.loadedAssets.Add(key, asyncOperationHandle);
+                this.loadingAssets.Remove(key);
+                this.assetLoadedByScene.Add(key, new List<object>());
             };
             return handle;
         }
 
+        public void UnloadSceneAsync(object key)
+        {
+            AsyncOperationHandle<SceneInstance> sceneHandle = default;
+            if (!this.assetLoadedByScene.TryGetValue(key.ToString(), out var listHandle)) return;
+            if (this.loadedAssets.TryGetValue(key, out var loadedHandle)) sceneHandle   = loadedHandle.Convert<SceneInstance>();
+            if (this.loadingAssets.TryGetValue(key, out var loadingHandle)) sceneHandle = loadingHandle.Convert<SceneInstance>();
+            Addressables.UnloadSceneAsync(sceneHandle);
+            this.UnloadUnusedAssets(key);
+            this.assetLoadedByScene.Remove(key);
+        }
+
+        public void UnloadUnusedAssets(object sceneName)
+        {
+            if (!this.assetLoadedByScene.ContainsKey(sceneName)) return;
+            this.assetLoadedByScene[sceneName].ForEach(e =>
+            {
+                this.ReleaseAsset(e);
+                this.TryRemoveHandle(e);
+            });
+        }
+
+        public List<AsyncOperationHandle<T>> PreloadAsync<T>(params object[] keys) { return keys.Select(key => Addressables.LoadAssetAsync<T>(key)).ToList(); }
+
+        public AsyncOperationHandle<T> LoadAssetAsync<T>(object key, string targetScene, bool isAutoUnload = true)
+        {
+            if (this.loadedAssets.TryGetValue(key, out var loadAssetHandle)) return loadAssetHandle.Convert<T>();
+            if (this.loadingAssets.TryGetValue(key, out var loadingAssetHandle)) return loadingAssetHandle.Convert<T>();
+            var handle = Addressables.LoadAssetAsync<T>(key);
+            this.loadingAssets.Add(key, handle);
+            handle.Completed += (asyncOperationHandle) =>
+            {
+                this.loadedAssets.Add(key, asyncOperationHandle);
+                this.loadingAssets.Remove(key);
+                this.AddAssetToScene(targetScene, key);
+            };
+            return handle;
+        }
+
+        private void AddAssetToScene(string targetScene, object key)
+        {
+            if (this.assetLoadedByScene.TryGetValue(targetScene, out var assetKey))
+            {
+                this.assetLoadedByScene[targetScene].Add(assetKey);
+                return;
+            }
+
+            this.assetLoadedByScene.Add(targetScene, new List<object>());
+        }
+
         public void ReleaseAsset(object key)
         {
-            if (LoadedAssets.TryGetValue(key, out var handle))
+            if (!this.loadedAssets.TryGetValue(key, out var handle)) return;
+            try
             {
-                Addressables.Release(key);
-                this.LoadedAssets.Remove(handle);
+                if(!handle.IsValid()) return;
+                Addressables.Release(handle);
+                this.loadedAssets.Remove(key);
+            }
+            catch (Exception e)
+            {
+                // ignored
             }
         }
-        
+
+        private void TryRemoveHandle(object key)
+        {
+            if (this.loadedAssets.ContainsKey(key)) this.loadedAssets.Remove(key);
+            if (this.loadingAssets.ContainsKey(key)) this.loadingAssets.Remove(key);
+            foreach (var scene in this.assetLoadedByScene.Where(scene => scene.Value.Contains(key))) scene.Value.Remove(key);
+        }
     }
 }

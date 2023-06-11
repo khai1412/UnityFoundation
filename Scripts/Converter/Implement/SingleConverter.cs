@@ -3,6 +3,7 @@ namespace Converter.Implement
     using System;
     using Converter.Base;
     using TheOneStudio.HyperCasual.Extensions;
+    using UnityFoundation.Scripts.Converter.BaseConvert;
 
     public class SingleConverter : BaseConverter
     {

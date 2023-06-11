@@ -3,6 +3,7 @@ namespace Converter.Implement
     using System;
     using Converter.Base;
     using Newtonsoft.Json;
+    using UnityFoundation.Scripts.Converter.BaseConvert;
 
     public class DefaultConverter : BaseConverter
     {

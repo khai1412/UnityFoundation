@@ -151,7 +151,7 @@ namespace GameFoundation.Scripts.Utilities.ObjectPool
 
         public async Task<ObjectPool> CreatePool(string prefabName, int initialPoolSize, GameObject root)
         {
-            var prefab = await this.gameAssets.LoadAssetAsync<GameObject>(prefabName, false);
+            var prefab = await this.gameAssets.LoadAssetAsync<GameObject>(prefabName);
 
             if (!this.cachedLoadedPrefab.ContainsKey(prefabName))
             {
@@ -164,7 +164,7 @@ namespace GameFoundation.Scripts.Utilities.ObjectPool
 
         public async Task<GameObject> Spawn(string prefabName, Transform parent, Vector3 position, Quaternion rotation)
         {
-            var prefab = await this.gameAssets.LoadAssetAsync<GameObject>(prefabName, false);
+            var prefab = await this.gameAssets.LoadAssetAsync<GameObject>(prefabName);
 
             if (!this.cachedLoadedPrefab.ContainsKey(prefabName))
             {

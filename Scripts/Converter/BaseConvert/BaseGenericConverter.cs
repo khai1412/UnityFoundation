@@ -1,6 +1,7 @@
 namespace Converter.Base
 {
     using System;
+    using UnityFoundation.Scripts.Converter.BaseConvert;
 
     public abstract class BaseGenericConverter : BaseConverter
     {

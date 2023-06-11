@@ -7,6 +7,7 @@
     "UnityFoundationUIModule",
     "UnityFoundationObjectPool",
     "UnityFoundationGameAsset",
-    "UnityFoundationLocalData"
+    "UnityFoundationLocalData",
+    "BlueprintDataManager"
   ]
 }

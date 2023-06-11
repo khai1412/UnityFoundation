@@ -10,7 +10,7 @@ namespace Converter.Implement
     {
         private readonly string separator;
 
-        public DictionaryGenericConverter(string separator = ":", string listSeparator = ";") : base(listSeparator)
+        public DictionaryGenericConverter(string separator = ":", string listSeparator = "|") : base(listSeparator)
         {
             this.separator = separator;
         }

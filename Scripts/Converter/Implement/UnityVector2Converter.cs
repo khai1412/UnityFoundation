@@ -5,6 +5,7 @@ namespace Converter.Implement
     using Converter.Base;
     using TheOneStudio.HyperCasual.Extensions;
     using UnityEngine;
+    using UnityFoundation.Scripts.Converter.BaseConvert;
 
     public class UnityVector2Converter : BaseConverter
     {

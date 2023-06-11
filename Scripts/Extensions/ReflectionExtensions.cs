@@ -40,6 +40,12 @@ namespace UnityFoundation.Scripts.Extensions
             }
         }
 
+        public static FieldInfo GetFieldInfoWithAttribute<T>(this object instance) where T : Attribute
+        {
+            var fieldInfos = instance.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            return fieldInfos.Where(field => field.CustomAttributes.Any()).FirstOrDefault(field => field.CustomAttributes.FirstOrDefault()?.AttributeType == typeof(T));
+        }
+
         public static T GetCustomAttribute<T>(this object instance) where T : Attribute
         {
             return (T)Attribute.GetCustomAttribute(instance.GetType(), typeof(T));

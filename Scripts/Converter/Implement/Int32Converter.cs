@@ -3,6 +3,7 @@ namespace Converter.Implement
     using System;
     using Converter.Base;
     using TheOneStudio.HyperCasual.Extensions;
+    using UnityFoundation.Scripts.Converter.BaseConvert;
 
     public class Int32Converter : BaseConverter
     {
@@ -10,6 +11,7 @@ namespace Converter.Implement
 
         protected override object ConvertFromString_Internal(string str, Type type)
         {
+            bool a = str.IsNullOrWhitespace();
             return int.Parse(str.IsNullOrWhitespace() ? "0" : str);
         }
 

@@ -1,0 +1,13 @@
+﻿{
+  "name": "BlueprintDataManager",
+  "rootNamespace": "",
+  "references": [
+    "UnityFoundationExtension",
+    "Zenject",
+    "UniTask",
+    "Unity.Addressables",
+    "Unity.ResourceManager",
+    "UniTask.Addressables",
+    "UnityFoundationConverter"
+  ]
+}

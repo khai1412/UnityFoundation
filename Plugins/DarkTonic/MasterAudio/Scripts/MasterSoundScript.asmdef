@@ -1,0 +1,10 @@
+﻿{
+  "name": "MasterSoundScript",
+  "rootNamespace": "",
+  "references": [
+    "Unity.ResourceManager",
+    "UniTask.Addressables",
+    "UniTask",
+    "Unity.Addressables"
+  ]
+}

@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityFoundation.Scripts.BlueprintManager.BlueprintBase;
     using UnityFoundation.Scripts.BlueprintManager.BlueprintDataReader;
     using UnityFoundation.Scripts.BlueprintManager.HandleBlueprintData;
     using UnityFoundation.Scripts.Extensions;
     using Zenject;
 
-    public abstract class BlueprintDataCsv<TKey, TData> : IBlueprintData where TData : IDataRecord
+    public abstract class BlueprintDataCsv<TKey, TData> : IBlueprintData
     {
         public Dictionary<TKey, TData> Data;
         public void ConvertData(string rawData)
@@ -17,9 +18,19 @@
             var dataRecord                   = CsvDataConverter.Deserialize<TData>(rawData);
             foreach (var record in dataRecord)
             {
-                var key = record.GetFieldInfoWithAttribute<KeyOfRecord>().GetValue(record);
-                if (key == null) throw new Exception("this data must have key attribute");
-                this.Data.Add((TKey)key, record);
+                var    listRecord = record.GetFieldInfoWithAttribute<KeyOfRecord>();
+                switch (listRecord.Count)
+                {
+                    case 0: throw new Exception("");
+                    case 1: this.Data.Add((TKey) listRecord.First().GetValue(record),record);
+                        break;
+                    case >1:
+                        var multiKey = "";
+                        listRecord.ForEach(field=>multiKey+=field.GetValue(record));
+                        object key = multiKey;
+                        this.Data.Add((TKey)key,record);
+                        break;
+                }
             }
         }
 

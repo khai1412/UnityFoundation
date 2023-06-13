@@ -8,6 +8,7 @@
     "UnityFoundationObjectPool",
     "UnityFoundationGameAsset",
     "UnityFoundationLocalData",
-    "BlueprintDataManager"
+    "BlueprintDataManager",
+    "SoundManager"
   ]
 }

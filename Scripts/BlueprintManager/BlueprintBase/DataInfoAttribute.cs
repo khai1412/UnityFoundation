@@ -5,8 +5,8 @@
     [AttributeUsage(AttributeTargets.Class)]
     public class DataInfoAttribute : Attribute
     {
-        public string DataPath;
-        public Type   HandleLocalDataType;
+        public readonly string DataPath;
+        public readonly Type   HandleLocalDataType;
         public DataInfoAttribute(string dataPath,Type handleLocalDataType = null)
         {
             this.DataPath            = dataPath;

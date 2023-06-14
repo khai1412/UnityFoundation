@@ -7,9 +7,8 @@
 
     public abstract class BaseSceneInstaller : MonoInstaller
     {
-        [SerializeField] protected RootUICanvas rootUICanvas;
-
-        [Inject] private ScreenManager screenManager;
+        [SerializeField] protected RootUICanvas  rootUICanvas;
+        [Inject]         private   ScreenManager screenManager;
         public override void InstallBindings()
         {
             if(this.rootUICanvas == null) return;

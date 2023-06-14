@@ -36,6 +36,7 @@
 
         public void SetupHandleData(DiContainer container)
         {
+            if(this.GetCustomAttribute<DataInfoAttribute>().HandleLocalDataType==null) return;
             var handleDataType                                                                                   = this.GetCustomAttribute<DataInfoAttribute>().HandleLocalDataType;
             if (container.Resolve(handleDataType) is IHandleBlueprintData handleData) handleData.BlueprintData = this;
         }

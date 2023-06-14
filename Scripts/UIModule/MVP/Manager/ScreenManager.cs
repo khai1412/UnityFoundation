@@ -22,17 +22,15 @@ namespace UnityFoundation.Scripts.UIModule.MVP.Manager
         public Transform    CurrentOverlayRoot { get; set; }
         public RootUICanvas RootUICanvas       { get; set; }
 
-        private Dictionary<Type, IScreenPresenter> loadedPresenters;
+        private Dictionary<Type, IScreenPresenter> loadedPresenters = new();
         private IScreenPresenter                   activeScreen;
-        private List<IScreenPresenter>             activePopup;
+        private List<IScreenPresenter>             activePopup = new();
         private SignalBus                          signalBus;
 
         public ScreenManager(SignalBus signalBus) { this.signalBus = signalBus; }
 
         public void Initialize()
         {
-            this.loadedPresenters = new();
-            this.activePopup      = new();
             this.signalBus        = this.GetCurrentContainer().Resolve<SignalBus>();
             this.signalBus.Subscribe<ShowScreenSignal>(this.OnShowScreen);
             this.signalBus.Subscribe<CloseScreenSignal>(this.OnCloseScreen);
@@ -41,6 +39,7 @@ namespace UnityFoundation.Scripts.UIModule.MVP.Manager
         public async void OpenScreen<TView, TPresenter>() where TView : class, IScreenView
             where TPresenter : BaseScreenPresenter
         {
+            if (this.loadedPresenters == null) this.loadedPresenters = new();
             if (!this.loadedPresenters.TryGetValue(typeof(TPresenter), out var screenPresenter))
             {
                 var presenter = this.GetCurrentContainer().Instantiate<TPresenter>();

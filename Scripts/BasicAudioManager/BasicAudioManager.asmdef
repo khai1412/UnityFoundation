@@ -1,0 +1,13 @@
+﻿{
+  "name": "BasicAudioManager",
+  "rootNamespace": "",
+  "references": [
+    "Zenject",
+    "UnityFoundationGameAsset",
+    "Unity.ResourceManager",
+    "UniTask.Addressables",
+    "UniTask",
+    "MasterSoundScript",
+    "Sirenix.OdinInspector.CompatibilityLayer.Editor"
+  ]
+}

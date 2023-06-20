@@ -1,4 +1,4 @@
-namespace Runtime.MainScenes.StateMachine.Controller
+namespace UnityFoundation.Scripts.StateMachine.Controller
 {
     using System;
     using System.Collections.Generic;

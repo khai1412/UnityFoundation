@@ -1,9 +1,7 @@
 ﻿namespace TheOneStudio.HyperCasual.Scenes.Test
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Sirenix.Utilities;
+    using UniT.Extensions;
     using UnityEngine;
 
     public class AudioManager : MonoBehaviour
@@ -75,7 +73,7 @@
         }
 
         public void StopAllSound() => this.soundAudioSources.ForEach(e => this.StopSoundOrMusic(e.Key));
-        
+
         public void StopAllMusic() => this.musicAudioSources.ForEach(e => this.StopSoundOrMusic(e.Key));
 
         public void SetAllSoundValue(float value) => this.soundAudioSources.ForEach(e => e.Value.volume = value);

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Text;
-    using Codice.CM.Common;
     using global::Converter.Base;
 
     public class CsvDataConverter

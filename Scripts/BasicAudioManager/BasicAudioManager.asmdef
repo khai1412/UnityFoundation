@@ -8,6 +8,6 @@
     "UniTask.Addressables",
     "UniTask",
     "MasterSoundScript",
-    "Sirenix.OdinInspector.CompatibilityLayer.Editor"
+    "UnityFoundationExtension"
   ]
 }

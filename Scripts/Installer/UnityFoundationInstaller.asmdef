@@ -9,6 +9,6 @@
     "UnityFoundationGameAsset",
     "UnityFoundationLocalData",
     "BlueprintDataManager",
-    "SoundManager"
+    "BasicAudioManager"
   ]
 }

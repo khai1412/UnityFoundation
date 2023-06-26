@@ -2,7 +2,8 @@
   "name": "UnityFoundationLocalData",
   "rootNamespace": "",
   "references": [
-    
+    "Zenject",
+    "UnityFoundationExtension"
   ]
   
 }

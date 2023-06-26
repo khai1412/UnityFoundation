@@ -17,6 +17,7 @@ namespace GameFoundation.Scripts.Installer
             SignalBusInstaller.Install(this.Container);
             ScreenFlowInstaller.Install(this.Container);
             BlueprintManagerInstaller.Install(this.Container);
+            HandleLocalDataInstaller.Install(this.Container);
             this.Container.Bind<IGameAssets>().To<GameAssets>().AsCached();
             this.Container.Bind<ObjectPoolManager>().AsCached().NonLazy();
             this.Container.Bind<Fps>().FromNewComponentOnNewGameObject().AsCached().NonLazy();

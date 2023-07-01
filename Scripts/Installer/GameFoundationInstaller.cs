@@ -8,6 +8,7 @@ namespace GameFoundation.Scripts.Installer
     using TheOneStudio.HyperCasual.Scenes.Test;
     using UnityFoundation.Scripts.BlueprintManager;
     using UnityFoundation.Scripts.UIModule.MVP.Installer;
+    using UnityFoundation.Scripts.UserLocalData;
     using Zenject;
 
     public class GameFoundationInstaller : Installer<GameFoundationInstaller>

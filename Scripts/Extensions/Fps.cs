@@ -10,6 +10,7 @@
         // Use this for initialization
         private void Start()
         {
+            Application.targetFrameRate = 60;
 #if !DEVELOPMENT_BUILD && !UNITY_EDITOR && !SHOW_FPS
             this.gameObject.SetActive(false);
 #endif

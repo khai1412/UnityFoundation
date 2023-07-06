@@ -1,4 +1,4 @@
-namespace UniT.Extensions
+namespace UnityFoundation.Extensions
 {
     using System;
     using System.Collections.Generic;

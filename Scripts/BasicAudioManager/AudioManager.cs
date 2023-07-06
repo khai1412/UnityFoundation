@@ -1,7 +1,7 @@
 ﻿namespace TheOneStudio.HyperCasual.Scenes.Test
 {
     using System.Collections.Generic;
-    using UniT.Extensions;
+    using UnityFoundation.Extensions;
     using UnityEngine;
 
     public class AudioManager : MonoBehaviour

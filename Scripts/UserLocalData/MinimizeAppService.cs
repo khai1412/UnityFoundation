@@ -16,6 +16,9 @@
             this.localDataServices.StoreAllToLocal();
         }
 
-        private void OnApplicationQuit() { this.localDataServices.StoreAllToLocal(); }
+        private void OnApplicationQuit()
+        {
+            this.localDataServices.StoreAllToLocal();
+        }
     }
 }

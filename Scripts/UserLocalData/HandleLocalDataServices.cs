@@ -1,7 +1,8 @@
-namespace GameFoundation.Scripts.Utilities
+namespace UnityFoundation.Scripts.UserLocalData
 {
     using System;
     using System.Collections.Generic;
+    using GameFoundation.Scripts.Utilities;
     using Newtonsoft.Json;
     using UnityEngine;
 
@@ -18,8 +19,7 @@ namespace GameFoundation.Scripts.Utilities
         #endregion
 
         private readonly Dictionary<string, object> localDataCaches = new();
-
-        public HandleLocalDataServices() {  }
+        
 
         /// <summary>
         /// Save a class data to local

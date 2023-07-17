@@ -11,8 +11,6 @@
         {
             this.Container.BindAllDerivedTypes<ILocalData>();
             this.Container.Bind<HandleLocalDataServices>().AsCached().NonLazy();
-            // this.Container.Bind<MinimizeAppService>().FromNewComponentOnNewGameObject().AsSingle();
-            // typeof(ILocalData).GetDerivedTypes().ForEach(dataType=>this.Container.Resolve<HandleLocalDataServices>().Load(dataType));
         }
         
     }

@@ -3,105 +3,66 @@ namespace UnityFoundation.Scripts.UserLocalData
     using System;
     using System.Collections.Generic;
     using GameFoundation.Scripts.Utilities;
+    using GameFoundation.Scripts.Utilities.Extension;
     using Newtonsoft.Json;
     using UnityEngine;
+    using UnityFoundation.Scripts.Extensions;
+    using Zenject;
 
     /// <summary>
     /// Manager save Load Local data
     /// </summary>
     public class HandleLocalDataServices
     {
-        private const string LocalDataPrefix = "LD-";
-
-        #region inject
         
-
-        #endregion
-
-        private readonly Dictionary<string, object> localDataCaches = new();
-        
-
-        /// <summary>
-        /// Save a class data to local
-        /// </summary>
-        /// <param name="data">class data</param>
-        /// <param name="force"> if true, save data immediately to local</param>
-        /// <typeparam name="T"> type of class</typeparam>
-        public void Save<T>(T data, bool force = false) where T : class
+        private readonly Dictionary<string, ILocalData> localDataCaches = new();
+        public void AddOrUpdateLocalData(string key,ILocalData localData)
         {
-            var key = LocalDataPrefix + typeof(T).Name;
-
-            if (!this.localDataCaches.ContainsKey(key))
+            if (this.localDataCaches.TryGetValue(key, out var data))
             {
-                this.localDataCaches.Add(key, data);
+                this.localDataCaches[key] = data;
+                return;
             }
+            this.localDataCaches.Add(key,localData);
+        }
+        
 
-            if (!force) return;
-            var json = JsonConvert.SerializeObject(data);
+        public void SaveLocalData<T>(T localData) where T : ILocalData
+        {
+            var key = typeof(T).Name;
+            this.AddOrUpdateLocalData(key,localData);
+            var json = JsonConvert.SerializeObject(localData);
             PlayerPrefs.SetString(key, json);
             Debug.Log("Save " + key + ": " + json);
             PlayerPrefs.Save();
         }
-
-        /// <summary>
-        /// Load data from local
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T Load<T>() where T : class, ILocalData, new()
+        
+        public ILocalData Load(Type type) 
         {
-            var key = LocalDataPrefix + typeof(T).Name;
-
-            if (this.localDataCaches.TryGetValue(key, out var cache))
-            {
-                return (T)cache;
-            }
-
-            var json = PlayerPrefs.GetString(key);
-
-            var result = string.IsNullOrEmpty(json) ? new T() : JsonConvert.DeserializeObject<T>(json);
-
-            if (string.IsNullOrEmpty(json))
-            {
-                result?.Init();
-            }
-
-            this.localDataCaches.Add(key, result);
-
-            return result;
-        }
-
-        public object Load(Type localDataType)
-        {
-            var key = LocalDataPrefix + localDataType.Name;
+            var key = type.Name;
 
             if (this.localDataCaches.TryGetValue(key, out var cache))
             {
                 return cache;
             }
+            var json = PlayerPrefs.GetString(key);
 
-            var json   = PlayerPrefs.GetString(key);
-            var result = string.IsNullOrEmpty(json) ? Activator.CreateInstance(localDataType) : JsonConvert.DeserializeObject(json, localDataType);
-
-            if (string.IsNullOrEmpty(json))
-            {
-                result?.GetType().GetMethod("Init")?.Invoke(result, null);
-            }
-
-            this.localDataCaches.Add(key, result);
-
-            return result;
+            var result = string.IsNullOrEmpty(json) ? this.GetCurrentContainer().Resolve(type) : JsonConvert.DeserializeObject(json,type);
+            
+            this.AddOrUpdateLocalData(key,(ILocalData)result);
+            return (ILocalData)result;
         }
 
+        
         public void StoreAllToLocal()
         {
             foreach (var localData in this.localDataCaches)
             {
                 PlayerPrefs.SetString(localData.Key, JsonConvert.SerializeObject(localData.Value));
             }
-
             PlayerPrefs.Save();
             Debug.Log("Save Data To File");
         }
+        
     }
 }

@@ -48,14 +48,16 @@ namespace GameFoundation.Scripts.Utilities.Extension
             {
                 if (nonLazy)
                 {
-                    container.Bind(type).AsCached().NonLazy();
+                    container.Bind(type).AsSingle().NonLazy();
                 }
                 else
                 {
-                    container.Bind(type).AsCached();
+                    container.Bind(type).AsSingle();
                 }
             }
         }
+        
+        
 
         public static void BindInterfacesAndSelfToAllTypeDriveFrom<T>(this DiContainer diContainer)
         {

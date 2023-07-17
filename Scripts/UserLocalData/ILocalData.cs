@@ -1,7 +1,9 @@
-﻿namespace GameFoundation.Scripts.Utilities
+﻿namespace UnityFoundation.Scripts.UserLocalData
 {
+    using Zenject;
+
     public interface ILocalData
     {
-        void Init();
+        public void Init();
     }
 }

@@ -22,7 +22,6 @@ namespace GameFoundation.Scripts.Installer
             this.Container.Bind<IGameAssets>().To<GameAssets>().AsCached();
             this.Container.Bind<ObjectPoolManager>().AsCached().NonLazy();
             this.Container.Bind<Fps>().FromNewComponentOnNewGameObject().AsCached().NonLazy();
-            this.Container.Bind<HandleLocalDataServices>().AsCached().NonLazy();
             this.Container.Bind<AudioManager>().AsCached();
         }
     }

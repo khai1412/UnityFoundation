@@ -18,6 +18,7 @@
 
         private void OnApplicationQuit()
         {
+            Debug.LogError("dmm quit");
             this.localDataServices.StoreAllToLocal();
         }
     }

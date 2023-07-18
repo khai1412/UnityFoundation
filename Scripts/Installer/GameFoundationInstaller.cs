@@ -5,7 +5,7 @@ namespace GameFoundation.Scripts.Installer
     using GameFoundation.Scripts.Utilities;
     using GameFoundation.Scripts.Utilities.Extension;
     using GameFoundation.Scripts.Utilities.ObjectPool;
-    using TheOneStudio.HyperCasual.Scenes.Test;
+    using UnityFoundation.Scripts.BasicAudioManager;
     using UnityFoundation.Scripts.BlueprintManager;
     using UnityFoundation.Scripts.UIModule.MVP.Installer;
     using UnityFoundation.Scripts.UserLocalData;

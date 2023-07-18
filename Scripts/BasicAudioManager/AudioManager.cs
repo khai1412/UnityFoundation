@@ -1,8 +1,9 @@
-﻿namespace TheOneStudio.HyperCasual.Scenes.Test
+﻿namespace UnityFoundation.Scripts.BasicAudioManager
 {
+    using System;
     using System.Collections.Generic;
-    using UnityFoundation.Extensions;
     using UnityEngine;
+    using UnityFoundation.Extensions;
 
     public class AudioManager : MonoBehaviour
     {
@@ -10,7 +11,10 @@
         public  List<AudioClip>                 musicClips        = new();
         private Dictionary<string, AudioSource> soundAudioSources = new();
         private Dictionary<string, AudioSource> musicAudioSources = new();
-        private void                            Start() { this.SetupAudio(); }
+        private void OnEnable()
+        {
+            this.SetupAudio();
+        }
 
         private void SetupAudio()
         {
